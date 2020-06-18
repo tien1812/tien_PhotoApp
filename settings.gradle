@@ -1,0 +1,2 @@
+rootProject.name='NVT Image'
+include ':app'
