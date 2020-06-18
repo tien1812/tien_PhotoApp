@@ -1,5 +1,6 @@
 package vn.tien.nvtimage.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +15,22 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vn.tien.nvtimage.R;
+import vn.tien.nvtimage.constant.Constant;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.FragmentHomeBinding;
 import vn.tien.nvtimage.ui.adapter.PhotoAdapter;
+import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding mBinding;
     private RecyclerView mRecyclerView;
     private PhotoAdapter mPhotoAdapter;
     private HomeViewModel mHomeViewModel;
+    private List<Photo> mPhotos = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,11 +55,22 @@ public class HomeFragment extends Fragment {
         mHomeViewModel.getPhotos().observe(this, new Observer<List<Photo>>() {
             @Override
             public void onChanged(List<Photo> photos) {
-                mPhotoAdapter.setPhotos(photos);
+                mPhotos.addAll(photos);
+                mPhotoAdapter.setPhotos(mPhotos);
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mPhotoAdapter);
+        mPhotoAdapter.setOnClickItem(new PhotoAdapter.OnClickItem() {
+            @Override
+            public void onCLickPhoto(Photo photo) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constant.KEY_BUNDLE_PHOTO,photo);
+                Intent intent = DetailPhotoActivity.getIntent(getContext());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     public static Fragment getInstance() {

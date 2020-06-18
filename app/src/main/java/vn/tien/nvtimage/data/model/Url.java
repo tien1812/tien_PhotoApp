@@ -1,13 +1,11 @@
 package vn.tien.nvtimage.data.model;
 
-import android.widget.ImageView;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import androidx.databinding.BindingAdapter;
-
-import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
-public class Url {
+public class Url implements Parcelable {
     @SerializedName("raw")
     private String mRaw;
     @SerializedName("full")
@@ -21,6 +19,26 @@ public class Url {
 
     public Url() {
     }
+
+    protected Url(Parcel in) {
+        mRaw = in.readString();
+        mFull = in.readString();
+        mRegular = in.readString();
+        mSmall = in.readString();
+        mThumb = in.readString();
+    }
+
+    public static final Creator<Url> CREATOR = new Creator<Url>() {
+        @Override
+        public Url createFromParcel(Parcel in) {
+            return new Url(in);
+        }
+
+        @Override
+        public Url[] newArray(int size) {
+            return new Url[size];
+        }
+    };
 
     public String getRaw() {
         return mRaw;
@@ -42,8 +60,18 @@ public class Url {
         return mThumb;
     }
 
-    @BindingAdapter({"photo"})
-    public static void loadImage(ImageView imageView, String url){
-        Glide.with(imageView.getContext()).load(url).into(imageView);
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mRaw);
+        parcel.writeString(mFull);
+        parcel.writeString(mRegular);
+        parcel.writeString(mSmall);
+        parcel.writeString(mThumb);
+    }
+
 }

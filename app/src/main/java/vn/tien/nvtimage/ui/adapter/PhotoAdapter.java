@@ -1,6 +1,7 @@
 package vn.tien.nvtimage.ui.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,15 @@ import vn.tien.nvtimage.databinding.ItemPhotoBinding;
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {
     private List<Photo> mPhotos;
     private ItemPhotoBinding mPhotoBinding;
+    private OnClickItem mOnClickItem;
 
     public void setPhotos(List<Photo> photos) {
         mPhotos = photos;
         notifyDataSetChanged();
+    }
+
+    public void setOnClickItem(OnClickItem onClickItem) {
+        mOnClickItem = onClickItem;
     }
 
     @NonNull
@@ -34,6 +40,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
     public void onBindViewHolder(@NonNull PhotoHolder holder, int position) {
         Photo photo = mPhotos.get(position);
         holder.bind(photo);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnClickItem.onCLickPhoto(photo);
+            }
+        });
     }
 
     @Override
@@ -53,5 +65,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
             mPhotoBinding.setPhoto(photo);
             mPhotoBinding.executePendingBindings();
         }
+    }
+
+    public interface OnClickItem {
+        void onCLickPhoto(Photo photo);
     }
 }
