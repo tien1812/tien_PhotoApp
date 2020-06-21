@@ -1,4 +1,4 @@
-package vn.tien.nvtimage.ui.adapter;
+package vn.tien.nvtimage.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +8,21 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vn.tien.nvtimage.R;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ItemPhotoBinding;
 
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.PhotoHolder> {
     private List<Photo> mPhotos;
     private ItemPhotoBinding mPhotoBinding;
     private OnClickItem mOnClickItem;
 
     public void setPhotos(List<Photo> photos) {
-        mPhotos = photos;
+        mPhotos = new ArrayList<>();
+        mPhotos.addAll(photos);
         notifyDataSetChanged();
     }
 
