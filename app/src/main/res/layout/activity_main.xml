@@ -21,6 +21,7 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar"
+                android:background="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -29,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:titleTextColor="@android:color/white" />
+                    app:titleTextColor="@android:color/black" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -38,7 +39,7 @@
                     app:tabGravity="fill"
                     app:tabInlineLabel="true"
                     app:tabMode="fixed"
-                    app:tabTextColor="@android:color/white" />
+                    app:tabTextColor="@android:color/black" />
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.viewpager.widget.ViewPager

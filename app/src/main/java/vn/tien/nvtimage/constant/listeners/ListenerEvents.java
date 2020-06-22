@@ -1,4 +1,7 @@
 package vn.tien.nvtimage.constant.listeners;
 
-public class ListenerEvents {
+import vn.tien.nvtimage.data.model.Photo;
+
+public interface ListenerEvents {
+    void onClick(Photo photo);
 }

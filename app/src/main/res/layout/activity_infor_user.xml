@@ -1,6 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="user"
+            type="vn.tien.nvtimage.data.model.User" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.Toolbar
+                        app:title="@{user.name}"
+                        android:id="@+id/tool_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:titleTextColor="@color/colorBlack" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_12">
+
+                        <ImageView
+                            android:id="@+id/img_ava"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:layout_collapseMode="parallax"
+                            bind:avatar="@{user.image.large}" />
+
+                        <ImageView
+                            android:id="@+id/image_web"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_12"
+                            android:layout_toRightOf="@id/img_ava"
+                            android:src="@drawable/ic_public_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/text_web"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_12"
+                            android:layout_toRightOf="@id/image_web"
+                            android:text="@{user.portfolio}"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/img_loca"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/image_web"
+                            android:layout_marginLeft="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_toRightOf="@id/img_ava"
+                            android:src="@drawable/ic_location_on_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/text_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/image_web"
+                            android:layout_marginLeft="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_toRightOf="@id/img_loca"
+                            android:text="@{user.location}"
+                            android:textColor="@color/colorBlack" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_8"
+                        android:text="@{user.bio}"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabInlineLabel="true"
+                app:tabMode="fixed"
+                app:tabTextColor="@android:color/black" />
+        </androidx.viewpager.widget.ViewPager>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

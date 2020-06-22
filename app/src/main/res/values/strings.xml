@@ -2,4 +2,9 @@
     <string name="app_name">NVT Image</string>
     <string name="home_title">Home</string>
     <string name="collection_title">Collections</string>
+    <string name="title_photos"> Photos</string>
+    <string name="likes"> Likes</string>
+    <string name="share">share</string>
+    <string name="search">search</string>
+    <string name="title_users">Users</string>
 </resources>

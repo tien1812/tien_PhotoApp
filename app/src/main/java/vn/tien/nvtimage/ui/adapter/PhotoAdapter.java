@@ -1,4 +1,4 @@
-package vn.tien.nvtimage.ui.home;
+package vn.tien.nvtimage.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,25 +8,24 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import vn.tien.nvtimage.R;
+import vn.tien.nvtimage.constant.listeners.ListenerEvents;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ItemPhotoBinding;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.PhotoHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {
     private List<Photo> mPhotos;
     private ItemPhotoBinding mPhotoBinding;
-    private OnClickItem mOnClickItem;
+    private ListenerEvents mOnClickItem;
 
     public void setPhotos(List<Photo> photos) {
-        mPhotos = new ArrayList<>();
-        mPhotos.addAll(photos);
+        mPhotos = photos;
         notifyDataSetChanged();
     }
 
-    public void setOnClickItem(OnClickItem onClickItem) {
+    public void setOnClickItem(ListenerEvents onClickItem) {
         mOnClickItem = onClickItem;
     }
 
@@ -45,7 +44,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.PhotoHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnClickItem.onCLickPhoto(photo);
+                mOnClickItem.onClick(photo);
             }
         });
     }
@@ -67,9 +66,5 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.PhotoHolder> {
             mPhotoBinding.setPhoto(photo);
             mPhotoBinding.executePendingBindings();
         }
-    }
-
-    public interface OnClickItem {
-        void onCLickPhoto(Photo photo);
     }
 }

@@ -1,4 +1,4 @@
-package vn.tien.nvtimage.ui.home;
+package vn.tien.nvtimage.ui.search.users;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,37 +6,35 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import vn.tien.nvtimage.data.model.Photo;
+import vn.tien.nvtimage.data.model.User;
 import vn.tien.nvtimage.data.repository.PhotoRepository;
 
-public class HomeViewModel extends ViewModel {
-    private MutableLiveData<List<Photo>> mPhotos;
-    private CompositeDisposable mCompositeDisposable;
+public class ResultUserViewModel extends ViewModel {
+    private MutableLiveData<User> mUsers;
     private PhotoRepository mRepository;
+    private CompositeDisposable mCompositeDisposable;
 
     public void initViewModel(Context context) {
         mCompositeDisposable = new CompositeDisposable();
         mRepository = PhotoRepository.getInstance(context);
     }
 
-    public MutableLiveData<List<Photo>> getPhotos(int page) {
-        mPhotos = new MutableLiveData<>();
-        loadPhotos(page);
-        return mPhotos;
+    public MutableLiveData<User> getUsers(String query) {
+        mUsers = new MutableLiveData<>();
+        loadData(query);
+        return mUsers;
     }
 
-    private void loadPhotos(int page) {
-        Disposable disposable = mRepository.getPhoto(page)
+    private void loadData(String query) {
+        Disposable disposable = mRepository.searchUser(query)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(reponse -> mPhotos.setValue(reponse),
-                        error -> Log.d("taggg", error.getMessage()));
+                .subscribe(reponse -> mUsers.setValue(reponse),
+                        error -> Log.d("tag", error.getMessage()));
         mCompositeDisposable.add(disposable);
     }
 

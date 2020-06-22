@@ -1,12 +1,10 @@
-package vn.tien.nvtimage.ui.home;
+package vn.tien.nvtimage.ui.search.photos;
 
 import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -15,28 +13,28 @@ import io.reactivex.schedulers.Schedulers;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.data.repository.PhotoRepository;
 
-public class HomeViewModel extends ViewModel {
-    private MutableLiveData<List<Photo>> mPhotos;
-    private CompositeDisposable mCompositeDisposable;
+public class ResultPhotosModel extends ViewModel {
+    private MutableLiveData<Photo> mPhotos;
     private PhotoRepository mRepository;
+    private CompositeDisposable mCompositeDisposable;
 
     public void initViewModel(Context context) {
         mCompositeDisposable = new CompositeDisposable();
         mRepository = PhotoRepository.getInstance(context);
     }
 
-    public MutableLiveData<List<Photo>> getPhotos(int page) {
+    public MutableLiveData<Photo> getPhotos(String query) {
         mPhotos = new MutableLiveData<>();
-        loadPhotos(page);
+        loadData(query);
         return mPhotos;
     }
 
-    private void loadPhotos(int page) {
-        Disposable disposable = mRepository.getPhoto(page)
+    private void loadData(String query) {
+        Disposable disposable = mRepository.searchPhoto(query)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(reponse -> mPhotos.setValue(reponse),
-                        error -> Log.d("taggg", error.getMessage()));
+                        error -> Log.d("tag", error.getMessage()));
         mCompositeDisposable.add(disposable);
     }
 

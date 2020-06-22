@@ -3,9 +3,13 @@ package vn.tien.nvtimage.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.databinding.BaseObservable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Collections implements Parcelable {
+import java.util.List;
+
+public class Collection extends BaseObservable implements Parcelable {
     @SerializedName("id")
     private int mId;
     @SerializedName("title")
@@ -16,13 +20,15 @@ public class Collections implements Parcelable {
     private Link mLink;
     @SerializedName("user")
     private User mUser;
-    @SerializedName("preview_photos")
+    @SerializedName("cover_photo")
     private Photo mPhoto;
+    @SerializedName("results")
+    private List<Collection> mCollections;
 
-    public Collections() {
+    public Collection() {
     }
 
-    protected Collections(Parcel in) {
+    protected Collection(Parcel in) {
         mId = in.readInt();
         mTitle = in.readString();
         mTotalPhoto = in.readInt();
@@ -31,15 +37,15 @@ public class Collections implements Parcelable {
         mPhoto = in.readParcelable(Photo.class.getClassLoader());
     }
 
-    public static final Creator<Collections> CREATOR = new Creator<Collections>() {
+    public static final Creator<Collection> CREATOR = new Creator<Collection>() {
         @Override
-        public Collections createFromParcel(Parcel in) {
-            return new Collections(in);
+        public Collection createFromParcel(Parcel in) {
+            return new Collection(in);
         }
 
         @Override
-        public Collections[] newArray(int size) {
-            return new Collections[size];
+        public Collection[] newArray(int size) {
+            return new Collection[size];
         }
     };
 
@@ -67,6 +73,10 @@ public class Collections implements Parcelable {
         return mPhoto;
     }
 
+    public List<Collection> getCollections() {
+        return mCollections;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -81,4 +91,10 @@ public class Collections implements Parcelable {
         parcel.writeParcelable(mUser, i);
         parcel.writeParcelable(mPhoto, i);
     }
+
+    @Override
+    public String toString() {
+        return mTotalPhoto + "Photos";
+    }
+
 }

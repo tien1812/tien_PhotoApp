@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import vn.tien.nvtimage.utils.StringUltil;
 
 public class Photo extends BaseObservable implements Parcelable {
@@ -32,6 +34,8 @@ public class Photo extends BaseObservable implements Parcelable {
     private User mUser;
     @SerializedName("downloads")
     private int mDownloads;
+    @SerializedName("results")
+    private List<Photo> mPhotos;
 
     public Photo() {
     }
@@ -82,6 +86,10 @@ public class Photo extends BaseObservable implements Parcelable {
 
     public int getDownloads() {
         return mDownloads;
+    }
+
+    public List<Photo> getPhotos() {
+        return mPhotos;
     }
 
     @Override

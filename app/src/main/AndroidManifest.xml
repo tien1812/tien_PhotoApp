@@ -3,7 +3,9 @@
     package="vn.tien.nvtimage">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.search.SearchActivity"></activity>
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailPhotoActivity"/>
+        <activity android:name=".ui.detail.DetailPhotoActivity" />
+        <activity android:name=".ui.detailcollection.DetailCollectionActivity" />
+        <activity android:name=".ui.infor_user.InforUserActivity" />
     </application>
 
 </manifest>

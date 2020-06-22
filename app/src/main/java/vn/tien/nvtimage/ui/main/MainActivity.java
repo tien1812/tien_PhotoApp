@@ -1,9 +1,15 @@
 package vn.tien.nvtimage.ui.main;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -15,11 +21,16 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import vn.tien.nvtimage.R;
+import vn.tien.nvtimage.constant.Constant;
+import vn.tien.nvtimage.constant.listeners.ListenerEvents;
+import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ActivityMainBinding;
 import vn.tien.nvtimage.ui.collection.CollectionFragment;
+import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
 import vn.tien.nvtimage.ui.home.HomeFragment;
+import vn.tien.nvtimage.ui.search.SearchActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListenerEvents {
     private ActivityMainBinding mBinding;
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -39,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViewPager() {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.addFragment(HomeFragment.getInstance(), getString(R.string.home_title));
-        mViewPagerAdapter.addFragment(CollectionFragment.getInstance(), getString(R.string.collection_title));
+        mViewPagerAdapter.addFragment(HomeFragment.getInstance(),
+                getString(R.string.home_title));
+        mViewPagerAdapter.addFragment(CollectionFragment.getInstance(),
+                getString(R.string.collection_title));
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
@@ -49,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.app_name);
         mToolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     private void initView() {
@@ -77,7 +96,51 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        mDrawerLayout.openDrawer(GravityCompat.START);
+        switch (item.getItemId()) {
+            case R.id.item_search:
+                Intent intent = SearchActivity.getIntent(this);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Bạn muốn thoát ứng dụng không?");
+        builder.setPositiveButton(Html.fromHtml("<font color='#050407'>Có</font>"),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+        builder.setNegativeButton(Html.fromHtml("<font color='#050407'>Không</font>"),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onClick(Photo photo) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constant.KEY_BUNDLE_PHOTO, photo);
+        Intent intent = DetailPhotoActivity.getIntent(this);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

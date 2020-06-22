@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="vn.tien.nvtimage.data.model.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_12">
+
+        <ImageView
+            android:id="@+id/img_ava"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentStart="true"
+            bind:avatar="@{user.image.large}"
+            bind:layout_constraintBottom_toBottomOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/img_ava"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            android:text="@{user.name}"
+            bind:layout_constraintStart_toEndOf="@+id/img_ava"
+            bind:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:text="@{user.username}"
+            android:id="@+id/text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_name"
+            android:layout_alignEnd="@id/img_ava"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorBlack"
+            bind:layout_constraintStart_toEndOf="@+id/img_ava"
+            bind:layout_constraintTop_toBottomOf="@+id/text_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

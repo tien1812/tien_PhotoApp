@@ -6,8 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class Link implements Parcelable {
-    @SerializedName("self")
-    private String mSelf;
+    @SerializedName("html")
+    private String mHtml;
     @SerializedName("photos")
     private String mPhotos;
 
@@ -15,7 +15,7 @@ public class Link implements Parcelable {
     }
 
     protected Link(Parcel in) {
-        mSelf = in.readString();
+        mHtml = in.readString();
         mPhotos = in.readString();
     }
 
@@ -31,8 +31,8 @@ public class Link implements Parcelable {
         }
     };
 
-    public String getSelf() {
-        return mSelf;
+    public String getHtml() {
+        return mHtml;
     }
 
     public String getPhotos() {
@@ -46,7 +46,7 @@ public class Link implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSelf);
+        parcel.writeString(mHtml);
         parcel.writeString(mPhotos);
     }
 }
