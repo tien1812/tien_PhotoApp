@@ -1,7 +1,9 @@
 package vn.tien.nvtimage.ui.main;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -12,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ListenerEvents {
         initView();
         setUpToolbar();
         setUpViewPager();
+        checkPermission();
     }
 
     private void setUpViewPager() {
@@ -133,6 +138,22 @@ public class MainActivity extends AppCompatActivity implements ListenerEvents {
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        Constant.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            }
+        }
     }
 
     @Override

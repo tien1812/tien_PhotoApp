@@ -30,6 +30,7 @@
             android:padding="@dimen/dp_12">
 
             <ImageView
+                android:id="@+id/img_avatar"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
                 android:layout_marginLeft="80dp"

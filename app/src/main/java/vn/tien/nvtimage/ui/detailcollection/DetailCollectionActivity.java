@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,16 +23,18 @@ import vn.tien.nvtimage.constant.listeners.ListenerEvents;
 import vn.tien.nvtimage.data.model.Collection;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ActivityDetailCollectionBinding;
-import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
 import vn.tien.nvtimage.ui.adapter.PhotoAdapter;
+import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.infor_user.InforUserActivity;
 
-public class DetailCollectionActivity extends AppCompatActivity implements ListenerEvents{
+public class DetailCollectionActivity extends AppCompatActivity implements ListenerEvents, View.OnClickListener {
     private ActivityDetailCollectionBinding mBinding;
     private RecyclerView mRecyclerView;
     private DetailColViewModel mViewModel;
     private PhotoAdapter mPhotoAdapter;
     private Collection mCollection;
     private Toolbar mToolbar;
+    private ImageView mImageAva;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +82,8 @@ public class DetailCollectionActivity extends AppCompatActivity implements Liste
                 onBackPressed();
             }
         });
+        mImageAva = mBinding.imgAvatar;
+        mImageAva.setOnClickListener(this);
     }
 
     @Override
@@ -88,5 +93,20 @@ public class DetailCollectionActivity extends AppCompatActivity implements Liste
         Intent intent = DetailPhotoActivity.getIntent(this);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_avatar:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constant.KEY_BUNDLE_USER,mCollection.getUser());
+                Intent intent = InforUserActivity.getIntent(this);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

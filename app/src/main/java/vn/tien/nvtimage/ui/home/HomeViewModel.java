@@ -25,9 +25,9 @@ public class HomeViewModel extends ViewModel {
         mRepository = PhotoRepository.getInstance(context);
     }
 
-    public MutableLiveData<List<Photo>> getPhotos(int page) {
+    public MutableLiveData<List<Photo>> getPhotos() {
         mPhotos = new MutableLiveData<>();
-        loadPhotos(page);
+        loadPhotos(1);
         return mPhotos;
     }
 

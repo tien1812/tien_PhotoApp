@@ -32,9 +32,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tool_bar"
+                    android:contentDescription="TODO"
                     android:scaleType="fitXY"
-                    bind:photo="@{photo.url.regular}"
-                    android:contentDescription="TODO" />
+                    bind:photo="@{photo.url.regular}" />
 
                 <LinearLayout
                     android:id="@+id/layout_user"
@@ -189,12 +189,18 @@
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:id="@+id/fab_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/dp_24"
             android:layout_marginBottom="@dimen/dp_24"
             android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
+        <include
+            android:id="@+id/fab"
+            layout="@layout/fab_layout" />
     </RelativeLayout>
+
 </layout>

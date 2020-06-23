@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     private void initViewModel(int page) {
         mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         mHomeViewModel.initViewModel(getContext());
-        mHomeViewModel.getPhotos(page).observe(this, new Observer<List<Photo>>() {
+        mHomeViewModel.getPhotos().observe(this, new Observer<List<Photo>>() {
             @Override
             public void onChanged(List<Photo> photos) {
                 mPhotoAdapter.setPhotos(photos);
