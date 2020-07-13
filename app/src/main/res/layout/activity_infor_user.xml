@@ -30,11 +30,11 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.Toolbar
-                        app:title="@{user.name}"
                         android:id="@+id/tool_bar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
+                        app:title="@{user.name}"
                         app:titleTextColor="@color/colorBlack" />
 
                     <RelativeLayout
@@ -64,8 +64,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_12"
                             android:layout_toRightOf="@id/image_web"
+                            android:hint="Unknown"
                             android:text="@{user.portfolio}"
-                            android:textColor="@color/colorBlack" />
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorBlack" />
 
                         <ImageView
                             android:id="@+id/img_loca"
@@ -85,8 +87,10 @@
                             android:layout_marginLeft="@dimen/dp_12"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_toRightOf="@id/img_loca"
+                            android:hint="Unknown"
                             android:text="@{user.location}"
-                            android:textColor="@color/colorBlack" />
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorBlack" />
 
                     </RelativeLayout>
 

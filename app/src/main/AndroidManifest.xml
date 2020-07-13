@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailPhotoActivity" />
+        <activity android:name=".ui.detailphoto.DetailPhotoActivity" />
         <activity android:name=".ui.detailcollection.DetailCollectionActivity" />
         <activity android:name=".ui.infor_user.InforUserActivity" />
     </application>

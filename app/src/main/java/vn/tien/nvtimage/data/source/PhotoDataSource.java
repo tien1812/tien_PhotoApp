@@ -19,6 +19,8 @@ public interface PhotoDataSource {
 
         Observable<List<Photo>> getLikesOfUser(String username, int page);
 
+        Observable<List<Collection>> getCollectionsOfUser(String username, int page);
+
     }
 
     interface search {

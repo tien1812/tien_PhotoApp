@@ -52,6 +52,11 @@ public class PhotoRepository implements PhotoDataSource.remote, PhotoDataSource.
     }
 
     @Override
+    public Observable<List<Collection>> getCollectionsOfUser(String username, int page) {
+        return mPhotoRemoteData.getCollectionsOfUser(username,page);
+    }
+
+    @Override
     public Observable<Photo> searchPhoto(String query) {
         return mPhotoRemoteData.searchPhoto(query);
     }

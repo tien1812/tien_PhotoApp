@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,7 +21,8 @@ import vn.tien.nvtimage.constant.listeners.ListenerEvents;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.data.model.User;
 import vn.tien.nvtimage.databinding.ActivityInforUserBinding;
-import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.detailphoto.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.infor_user.fragment_collections.CollectionOfUserFragment;
 import vn.tien.nvtimage.ui.infor_user.fragment_likes.LikesOfUserFragment;
 import vn.tien.nvtimage.ui.infor_user.fragment_photos.PhotoOfUserFragment;
 import vn.tien.nvtimage.ui.main.ViewPagerAdapter;
@@ -36,7 +36,7 @@ public class InforUserActivity extends AppCompatActivity implements ListenerEven
     private ViewPagerAdapter mViewPagerAdapter;
     private PhotoOfUserFragment mPhotoOfUserFragment;
     private LikesOfUserFragment mLikesOfUserFragment;
-    private ImageView mImageWeb, mImageLocat;
+    private CollectionOfUserFragment mCollectionOfUserFragment;
     private TextView mTextWeb, mTextLocation;
     private User mUser;
 
@@ -65,8 +65,10 @@ public class InforUserActivity extends AppCompatActivity implements ListenerEven
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPagerAdapter.addFragment(mPhotoOfUserFragment, getString(R.string.title_photos));
         mViewPagerAdapter.addFragment(mLikesOfUserFragment, getString(R.string.likes));
+        mViewPagerAdapter.addFragment(mCollectionOfUserFragment, getString(R.string.collection_title));
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     private void initView() {
@@ -79,14 +81,9 @@ public class InforUserActivity extends AppCompatActivity implements ListenerEven
         mLikesOfUserFragment = new LikesOfUserFragment();
         mLikesOfUserFragment.setUser(mUser);
 
-        mImageWeb = mBinding.imageWeb;
-        mImageLocat = mBinding.imgLoca;
-        if (mUser.getPortfolio() == null) {
-            mImageWeb.setVisibility(View.GONE);
-        }
-        if (mUser.getLocation() == null) {
-            mImageLocat.setVisibility(View.GONE);
-        }
+        mCollectionOfUserFragment = new CollectionOfUserFragment();
+        mCollectionOfUserFragment.setUser(mUser);
+
         mTextWeb = mBinding.textWeb;
         mTextWeb.setOnClickListener(new View.OnClickListener() {
             @Override

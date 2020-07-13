@@ -24,7 +24,7 @@ import vn.tien.nvtimage.data.model.Collection;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ActivityDetailCollectionBinding;
 import vn.tien.nvtimage.ui.adapter.PhotoAdapter;
-import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.detailphoto.DetailPhotoActivity;
 import vn.tien.nvtimage.ui.infor_user.InforUserActivity;
 
 public class DetailCollectionActivity extends AppCompatActivity implements ListenerEvents, View.OnClickListener {

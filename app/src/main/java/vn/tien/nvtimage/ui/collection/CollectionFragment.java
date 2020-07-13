@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class CollectionFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CollectionAdapter mAdapter;
     private CollectionViewModel mViewModel;
+    private ProgressBar mProgressBar;
 
     @Nullable
     @Override
@@ -53,6 +55,7 @@ public class CollectionFragment extends Fragment {
             @Override
             public void onChanged(List<Collection> collections) {
                 mAdapter.setCollections(collections);
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -72,6 +75,7 @@ public class CollectionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        mProgressBar = mBinding.progressBar;
     }
 
     public static CollectionFragment getInstance() {

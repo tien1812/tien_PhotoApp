@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class ResultCollectionsFragment extends Fragment implements CollectionAda
     private CollectionAdapter mCollectionAdapter;
     private ResultCollectionViewModel mCollectionViewModel;
     private ImageView mImageView;
+    private ProgressBar mProgressBar;
 
     @Nullable
     @Override
@@ -50,9 +52,11 @@ public class ResultCollectionsFragment extends Fragment implements CollectionAda
     private void initView() {
         mImageView = mBinding.imageNull;
         mRecyclerView = mBinding.recycleItems;
+        mProgressBar = mBinding.progressBar;
         mCollectionAdapter = new CollectionAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mCollectionAdapter);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     public void resultCollections(String query) {

@@ -1,4 +1,4 @@
-package vn.tien.nvtimage.ui.detail;
+package vn.tien.nvtimage.ui.detailphoto;
 
 import android.app.DownloadManager;
 import android.app.WallpaperManager;
@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -43,7 +44,7 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
     private LinearLayout mLayoutUser;
     private TextView mTextDes;
     private Toolbar mToolbar;
-    private FloatingActionButton mFabShow, mFabDown, mFabSetWall;
+    private FloatingActionButton mFabShow, mFabDown, mFabSetWall, mFabWallLock;
     private boolean mShow;
     private Bitmap mBitmap;
     private ImageView mImage;
@@ -87,10 +88,12 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
         mFabDown = mBinding.fab.fabDown;
         mFabShow = mBinding.fabShow;
         mFabSetWall = mBinding.fab.fabWall;
+        mFabWallLock = mBinding.fab.fabLockScreen;
 
         mFabShow.setOnClickListener(this);
         mFabDown.setOnClickListener(this);
         mFabSetWall.setOnClickListener(this);
+        mFabWallLock.setOnClickListener(this);
     }
 
     @Override
@@ -144,6 +147,9 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
             case R.id.fab_wall:
                 setWallpaper();
                 break;
+            case R.id.fab_lock_screen:
+                setLockWallpaperScreen();
+                break;
             default:
                 break;
         }
@@ -168,18 +174,44 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void setLockWallpaperScreen() {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(DetailPhotoActivity.this);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int w = displayMetrics.widthPixels;
+        int h = displayMetrics.heightPixels;
+        try {
+            if (mBitmap != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    wallpaperManager.setBitmap(mBitmap, null, true,
+                            WallpaperManager.FLAG_LOCK);
+                    Toast.makeText(this, "Set Wallpaper Lock Success", Toast.LENGTH_SHORT).show();
+                    wallpaperManager.suggestDesiredDimensions(w, h);
+                } else {
+                    Toast.makeText(this,
+                            "Your Device Does Not Support Lock Screen Wallpapers",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Set Wallpaper Failed", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void downPhoto() {
         DownloadManager.Request request =
                 new DownloadManager.Request(Uri.parse(mPhoto.getUrl().getFull()));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI |
                 DownloadManager.Request.NETWORK_MOBILE);
-        request.setTitle("Tiến Photo Download"); //set title download notification
+        request.setTitle("Tiến Photo Download");
         request.setDescription("Downloading Image ...");
 
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                 ".png");
+                ".png");
         mDownloadManager.enqueue(request);
     }
 
@@ -187,14 +219,16 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
         if (mShow == false) {
             mFabSetWall.show();
             mFabDown.show();
+            mFabWallLock.show();
             mShow = true;
         } else {
             mFabSetWall.hide();
             mFabDown.hide();
+            mFabWallLock.hide();
             mShow = false;
         }
-
     }
+
 
     private void startInforActivity() {
         Bundle bundle = new Bundle();

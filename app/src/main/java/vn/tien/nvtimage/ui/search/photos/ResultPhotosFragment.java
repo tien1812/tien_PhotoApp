@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ import vn.tien.nvtimage.constant.listeners.ListenerEvents;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.FragmentRecyclerBinding;
 import vn.tien.nvtimage.ui.adapter.PhotoAdapter;
-import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.detailphoto.DetailPhotoActivity;
 
 public class ResultPhotosFragment extends Fragment implements ListenerEvents {
     private FragmentRecyclerBinding mBinding;
@@ -31,6 +32,7 @@ public class ResultPhotosFragment extends Fragment implements ListenerEvents {
     private PhotoAdapter mPhotoAdapter;
     private ResultPhotosModel mResultPhotosModel;
     private ImageView mImageView;
+    private ProgressBar mProgressBar;
 
     @Nullable
     @Override
@@ -57,10 +59,12 @@ public class ResultPhotosFragment extends Fragment implements ListenerEvents {
     private void initView() {
         mImageView = mBinding.imageNull;
         mRecyclerView = mBinding.recycleItems;
+        mProgressBar = mBinding.progressBar;
         mPhotoAdapter = new PhotoAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mPhotoAdapter);
         mPhotoAdapter.setOnClickItem(this);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     public void resultPhotos(String query){

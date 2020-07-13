@@ -42,6 +42,12 @@ public interface DataServer {
                                             @Query("page") int page,
                                             @Query("per_page") int per);
 
+    @GET("users/{username}/collections?")
+    Observable<List<Collection>> getCollectionsOfUser(@Path("username") String username,
+                                           @Query("client_id") String key,
+                                           @Query("page") int page,
+                                           @Query("per_page") int per);
+
     @GET("search/photos?")
     Observable<Photo>
     searchPhoto(@Query("client_id") String key, @Query("query") String query,

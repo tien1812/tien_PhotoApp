@@ -1,6 +1,6 @@
-package vn.tien.nvtimage.ui.infor_user.fragment_photos;
+package vn.tien.nvtimage.ui.infor_user.fragment_collections;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,27 +20,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import vn.tien.nvtimage.R;
-import vn.tien.nvtimage.constant.listeners.ListenerEvents;
-import vn.tien.nvtimage.data.model.Photo;
+import vn.tien.nvtimage.constant.Constant;
+import vn.tien.nvtimage.data.model.Collection;
 import vn.tien.nvtimage.data.model.User;
 import vn.tien.nvtimage.databinding.FragmentRecyclerBinding;
-import vn.tien.nvtimage.ui.adapter.PhotoAdapter;
+import vn.tien.nvtimage.ui.adapter.CollectionAdapter;
+import vn.tien.nvtimage.ui.detailcollection.DetailCollectionActivity;
 
-public class PhotoOfUserFragment extends Fragment {
+public class CollectionOfUserFragment extends Fragment {
     private FragmentRecyclerBinding mBinding;
     private RecyclerView mRecyclerView;
-    private PhotoAdapter mPhotoAdapter;
-    private PhotosViewModel mViewModel;
+    private CollectionAdapter mAdapter;
+    private CollectionsUserViewModel mViewModel;
     private User mUser;
-    private ListenerEvents mListenerEvents;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mListenerEvents = (ListenerEvents) context;
-    }
 
     @Nullable
     @Override
@@ -65,21 +59,30 @@ public class PhotoOfUserFragment extends Fragment {
         mRecyclerView = mBinding.recycleItems;
         mImageView = mBinding.imageNull;
         mProgressBar = mBinding.progressBar;
-        mPhotoAdapter = new PhotoAdapter();
+        mAdapter = new CollectionAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mViewModel = ViewModelProviders.of(this).get(PhotosViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(CollectionsUserViewModel.class);
         mViewModel.initViewModel(getContext());
-        mViewModel.getPhotos(mUser.getUsername()).observe(this, new Observer<List<Photo>>() {
+        mViewModel.getCollections(mUser.getUsername()).observe(this, new Observer<List<Collection>>() {
             @Override
-            public void onChanged(List<Photo> photos) {
-                mPhotoAdapter.setPhotos(photos);
+            public void onChanged(List<Collection> collections) {
                 mProgressBar.setVisibility(View.GONE);
-                if (photos.size() == 0){
+                mAdapter.setCollections(collections);
+                if (collections.size() == 0){
                     mImageView.setVisibility(View.VISIBLE);
                 }
             }
         });
-        mPhotoAdapter.setOnClickItem(mListenerEvents);
-        mRecyclerView.setAdapter(mPhotoAdapter);
+        mAdapter.setListenerClickItem(new CollectionAdapter.ListenerClickItem() {
+            @Override
+            public void onClick(Collection collection) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constant.KEY_BUNDLE_COLLEC, collection);
+                Intent intent = DetailCollectionActivity.getIntent(getContext());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

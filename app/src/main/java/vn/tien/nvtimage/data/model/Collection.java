@@ -94,7 +94,7 @@ public class Collection extends BaseObservable implements Parcelable {
 
     @Override
     public String toString() {
-        return mTotalPhoto + "Photos";
+        return mTotalPhoto + " Photos";
     }
 
 }

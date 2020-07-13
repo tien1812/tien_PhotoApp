@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ public class LikesOfUserFragment extends Fragment {
     private User mUser;
     private ListenerEvents mListenerEvents;
     private ImageView mImageView;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -45,7 +47,7 @@ public class LikesOfUserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil
-                .inflate(inflater, R.layout.fragment_recycler,container,false);
+                .inflate(inflater, R.layout.fragment_recycler, container, false);
         return mBinding.getRoot();
     }
 
@@ -62,6 +64,7 @@ public class LikesOfUserFragment extends Fragment {
     private void initview() {
         mImageView = mBinding.imageNull;
         mRecyclerView = mBinding.recycleItems;
+        mProgressBar = mBinding.progressBar;
         mPhotoAdapter = new PhotoAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel = ViewModelProviders.of(this).get(LikesViewModel.class);
@@ -70,7 +73,8 @@ public class LikesOfUserFragment extends Fragment {
             @Override
             public void onChanged(List<Photo> photos) {
                 mPhotoAdapter.setPhotos(photos);
-                if (photos.size() == 0){
+                mProgressBar.setVisibility(View.GONE);
+                if (photos.size() == 0) {
                     mImageView.setVisibility(View.VISIBLE);
                 }
             }

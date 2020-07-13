@@ -30,7 +30,7 @@ import vn.tien.nvtimage.constant.listeners.ListenerEvents;
 import vn.tien.nvtimage.data.model.Photo;
 import vn.tien.nvtimage.databinding.ActivityMainBinding;
 import vn.tien.nvtimage.ui.collection.CollectionFragment;
-import vn.tien.nvtimage.ui.detail.DetailPhotoActivity;
+import vn.tien.nvtimage.ui.detailphoto.DetailPhotoActivity;
 import vn.tien.nvtimage.ui.home.HomeFragment;
 import vn.tien.nvtimage.ui.search.SearchActivity;
 

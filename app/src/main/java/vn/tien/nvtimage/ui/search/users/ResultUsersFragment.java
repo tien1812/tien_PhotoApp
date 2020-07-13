@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class ResultUsersFragment extends Fragment implements UserAdapter.Listene
     private UserAdapter mUserAdapter;
     private ResultUserViewModel mUserViewModel;
     private ImageView mImageView;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -59,6 +61,8 @@ public class ResultUsersFragment extends Fragment implements UserAdapter.Listene
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mUserAdapter = new UserAdapter();
         mRecyclerView.setAdapter(mUserAdapter);
+        mProgressBar = mBinding.progressBar;
+        mProgressBar.setVisibility(View.GONE);
     }
 
 

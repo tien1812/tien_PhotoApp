@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     private int mPageCurrent = 1;
     private LinearLayoutManager mLayoutManager;
     private ListenerEvents mListenerEvents;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Photo> photos) {
                 mPhotoAdapter.setPhotos(photos);
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -72,6 +75,7 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mPhotoAdapter);
         mPhotoAdapter.setOnClickItem(mListenerEvents);
+        mProgressBar = mBinding.progressBar;
     }
 
     public static Fragment getInstance() {
