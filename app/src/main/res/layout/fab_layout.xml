@@ -7,8 +7,49 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/fab_layout"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:textStyle="bold"
+            android:padding="@dimen/dp_4"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="106dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_toLeftOf="@id/fab_down"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/background_text"
+            android:text="Set as Wallpaper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textStyle="bold"
+            android:padding="@dimen/dp_4"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="166dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_toLeftOf="@id/fab_down"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/background_text"
+            android:text="Download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textStyle="bold"
+            android:padding="@dimen/dp_4"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="226dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_toLeftOf="@id/fab_down"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/background_text"
+            android:text="Set as Lockscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_wall"
@@ -19,7 +60,6 @@
             android:layout_marginRight="@dimen/dp_32"
             android:layout_marginBottom="100dp"
             android:src="@drawable/ic_wallpaper_black_24dp"
-            android:visibility="invisible"
             bind:fabCustomSize="@dimen/dp_40" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,7 +71,6 @@
             android:layout_marginRight="@dimen/dp_32"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_file_download_white_24dp"
-            android:visibility="invisible"
             bind:fabCustomSize="@dimen/dp_40" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,7 +82,6 @@
             android:layout_marginRight="@dimen/dp_32"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_screen_lock_landscape_black_24dp"
-            android:visibility="invisible"
             bind:fabCustomSize="@dimen/dp_40" />
     </RelativeLayout>
 </layout>

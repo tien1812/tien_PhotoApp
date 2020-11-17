@@ -1,6 +1,7 @@
 package vn.tien.nvtimage.ui.detailphoto;
 
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.InputStream;
 
@@ -45,6 +49,8 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
     private TextView mTextDes;
     private Toolbar mToolbar;
     private FloatingActionButton mFabShow, mFabDown, mFabSetWall, mFabWallLock;
+    private RelativeLayout mRelativeLayout;
+    private ProgressBar mProgressBar;
     private boolean mShow;
     private Bitmap mBitmap;
     private ImageView mImage;
@@ -85,11 +91,12 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
                 onBackPressed();
             }
         });
+        mProgressBar= mBinding.progressBar;
         mFabDown = mBinding.fab.fabDown;
         mFabShow = mBinding.fabShow;
         mFabSetWall = mBinding.fab.fabWall;
         mFabWallLock = mBinding.fab.fabLockScreen;
-
+        mRelativeLayout = mBinding.fab.fabLayout;
         mFabShow.setOnClickListener(this);
         mFabDown.setOnClickListener(this);
         mFabSetWall.setOnClickListener(this);
@@ -142,12 +149,14 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
                 showFab();
                 break;
             case R.id.fab_down:
+                Snackbar.make(view,"Downloading...",Snackbar.LENGTH_LONG).show();
                 downPhoto();
                 break;
             case R.id.fab_wall:
+                Snackbar.make(view,"Set as Wallpaper...",Snackbar.LENGTH_LONG).show();
                 setWallpaper();
-                break;
             case R.id.fab_lock_screen:
+                Snackbar.make(view,"Set as LockScreen...",Snackbar.LENGTH_LONG).show();
                 setLockWallpaperScreen();
                 break;
             default:
@@ -164,7 +173,7 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
         try {
             if (mBitmap != null) {
                 wallpaperManager.setBitmap(mBitmap);
-                Toast.makeText(this, "Set Wallpaper Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
                 wallpaperManager.suggestDesiredDimensions(w, h);
             } else {
                 Toast.makeText(this, "Set Wallpaper Failed", Toast.LENGTH_SHORT).show();
@@ -185,7 +194,8 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     wallpaperManager.setBitmap(mBitmap, null, true,
                             WallpaperManager.FLAG_LOCK);
-                    Toast.makeText(this, "Set Wallpaper Lock Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Set LockScreen Successfully",
+                            Toast.LENGTH_SHORT).show();
                     wallpaperManager.suggestDesiredDimensions(w, h);
                 } else {
                     Toast.makeText(this,
@@ -217,14 +227,10 @@ public class DetailPhotoActivity extends AppCompatActivity implements View.OnCli
 
     private void showFab() {
         if (mShow == false) {
-            mFabSetWall.show();
-            mFabDown.show();
-            mFabWallLock.show();
+            mRelativeLayout.setVisibility(View.VISIBLE);
             mShow = true;
         } else {
-            mFabSetWall.hide();
-            mFabDown.hide();
-            mFabWallLock.hide();
+            mRelativeLayout.setVisibility(View.INVISIBLE);
             mShow = false;
         }
     }
